@@ -15,8 +15,15 @@ class User extends \Illuminate\Database\Eloquent\Model
 	{
 		$user = User::where('api_key', '=', $apikey)->first();
         $this->details = $user;
-
-        return ($user->exists) ? true : false;
+        
+        if($user)
+        {
+        	return true;
+        }
+        else
+        {
+        	return false;
+        }
 	}
 
 	function insertUser($id_user,$password,$nama_user,$email,$tanggal_lahir,$date_created,$profile_foto_url,$status,$description_channel,$subscriber_count,$api_key)

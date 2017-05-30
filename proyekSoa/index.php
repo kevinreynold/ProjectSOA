@@ -116,7 +116,7 @@ $app->get('/searchChannel/{name}',function($request,$response,$args){
 
     echo json_encode($payload);
    
-});
+})->add(new soaAuth());
 
 
 //perlu api
@@ -138,7 +138,7 @@ $app->get('/searchVideo/{name}',function($request,$response,$args){
     }
 
     echo json_encode($payload);
-});
+})->add(new soaAuth());
 
 //perlu api
 $app->post('/subscribeChannel',function($request,$response,$args){
@@ -205,7 +205,7 @@ $app->post('/subscribeChannel',function($request,$response,$args){
    echo json_encode($payload);
 
 
-});
+})->add(new soaAuth());
 
 ///perlu api
 $app->get('/getChannelSubscribed/{id_user}',function($request,$response,$args){
@@ -228,7 +228,7 @@ $app->get('/getChannelSubscribed/{id_user}',function($request,$response,$args){
     echo json_encode($payload);
 
 
-});
+})->add(new soaAuth());
 
 //perlu api
 $app->get('/getTotalSubscriber/{id_user}',function($request,$response,$args){
@@ -250,7 +250,7 @@ $app->get('/getTotalSubscriber/{id_user}',function($request,$response,$args){
     }
 
     echo json_encode($payload);
-});
+})->add(new soaAuth());
 
 //perlu api
 $app->get('/getVideoViewers/{id_video}',function($request,$response,$args){
@@ -272,7 +272,7 @@ $app->get('/getVideoViewers/{id_video}',function($request,$response,$args){
     }
 
     echo json_encode($payload);
-});
+})->add(new soaAuth());
 
 //perlu api
 $app->get('/getInfoChannel/{id_user}',function($request,$response,$args){
@@ -294,7 +294,7 @@ $app->get('/getInfoChannel/{id_user}',function($request,$response,$args){
     }
 
     echo json_encode($payload);
-});
+})->add(new soaAuth());
 
 $app->get('/getNewCommentOnVideos/{id_user}',function($request,$response,$args){
   $id_user=$args["id_user"];
@@ -314,7 +314,7 @@ $app->get('/getNewCommentOnVideos/{id_user}',function($request,$response,$args){
   }
 
   echo json_encode($payload);
-});
+})->add(new soaAuth());
 
 $app->post('/insertComment',function($request,$response,$args){
    
@@ -338,7 +338,7 @@ $app->post('/insertComment',function($request,$response,$args){
     $payload["error_message"]=$hcomments->error_message;
    }
    echo json_encode($payload);
-});
+})->add(new soaAuth());
 
 $app->post('/uploadVideo',function($request,$response,$args){
     
@@ -374,6 +374,6 @@ $app->post('/uploadVideo',function($request,$response,$args){
 
     echo json_encode($payload);
 
-});
+})->add(new soaAuth());
 
 $app->run();

@@ -21,13 +21,23 @@ class Authentication
 
         if (!$user->getUserWithApiKey($apikey)) {
             $response->withStatus(401);
+            // $response->getBody()->write('BEFORE');
+            // $response = $next($request, $response);
+            // $response->getBody()->write('AFTER');
+            //diatas untuk gabungin 
 
-            return $response;
+           // $response->getBody()->write("user tidak ditemukan asd");
+            $payload["result"]="fail";
+            $payload["error_message"]="api key tidak terdaftar";
+        
+            return $response->withStatus(401)->withJSON($payload);
+            //return $response->withStatus(200)->withJSON($payload);
         }
 
-        $request = $request->withAttribute('id_user', $user->details->id);
+        //$request = $request->withAttribute('id_user', $user->details->id_user);
+        //ambil response dari sebelumnya
         $response = $next($request, $response);
-
+        
         return $response;
     }
 }
