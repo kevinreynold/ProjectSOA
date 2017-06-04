@@ -20,8 +20,8 @@ $app = new Slim\App();
 
 //$app->add(new soaAuth());
 //ndk perlu api key
-$app->post('/generateApiKey',function($request,$response,$args){
-    
+$app->put('/generateApiKey',function($request,$response,$args){
+
     $users = new User();
 
     $id_user=$request->getParsedBody()["id_user"];
@@ -33,15 +33,17 @@ $app->post('/generateApiKey',function($request,$response,$args){
     {
         $payload["result"]="scuccess";
         $payload["api_key"]=$users->new_api_key;
+        return $response->withStatus(200)->withJSON($payload);
     }
     else
     {
         $payload["result"]="fail";
         $payload["error_message"]=$users->error_message;
-        
+        return $response->withStatus(404)->withJSON($payload);
+
     }
 
-    echo json_encode($payload);
+    //echo json_encode($payload);
 
 
 });
@@ -49,7 +51,7 @@ $app->post('/generateApiKey',function($request,$response,$args){
 //ndk perlu api key
 $app->post('/insertUser',function($request,$response,$args){
 
-   
+
     $users= new User();
 
     $id_user=$request->getParsedBody()["id_user"];
@@ -73,7 +75,7 @@ $app->post('/insertUser',function($request,$response,$args){
         $uploadfile = $uploaddir . basename($_FILES['newfile']['name']);
 
         if (move_uploaded_file($_FILES['newfile']['tmp_name'], $uploadfile)) {
-            
+
             $payload["result"]="success";
         } else {
             $payload["result"]="fail";
@@ -88,7 +90,7 @@ $app->post('/insertUser',function($request,$response,$args){
 
     echo json_encode($payload);
 
-    
+
 
 });
 
@@ -96,7 +98,7 @@ $app->post('/insertUser',function($request,$response,$args){
 
 //perlu api key
 $app->get('/searchChannel/{name}',function($request,$response,$args){
-   
+
     $users = new User();
 
     $nama_user=$args["name"];
@@ -107,15 +109,17 @@ $app->get('/searchChannel/{name}',function($request,$response,$args){
     {
         $payload["result"]="success";
         $payload["data"]=$users->data;
+        return $response->withStatus(200)->withJSON($payload);
     }
     else
     {
         $payload["result"]="fail";
         $payload["error_message"]=$users->error_message;
+        return $response->withStatus(404)->withJSON($payload);
     }
 
-    echo json_encode($payload);
-   
+    //echo json_encode($payload);
+
 })->add(new soaAuth());
 
 
@@ -129,20 +133,22 @@ $app->get('/searchVideo/{name}',function($request,$response,$args){
     {
         $payload["result"]="success";
         $payload["data"]=$videos->data;
-
+        return $response->withStatus(200)->withJSON($payload);
     }
     else
     {
         $payload["result"]="fail";
         $payload["error_message"]=$videos->error_message;
+        return $response->withStatus(404)->withJSON($payload);
     }
 
-    echo json_encode($payload);
+    //echo json_encode($payload);
+    //return $response->withStatus(200)->withJSON($payload);
 })->add(new soaAuth());
 
 //perlu api
 $app->post('/subscribeChannel',function($request,$response,$args){
-   
+
    $id_channel=$request->getParsedBody()["id_channel"];
    $id_user=$request->getParsedBody()["id_user"];
    $subscribe=$request->getParsedBody()["subscribe"];
@@ -163,7 +169,7 @@ $app->post('/subscribeChannel',function($request,$response,$args){
                  $payload["result"]="fail";
                  $payload["error_message"]=$dsubscribes->error_message;
             }
-            
+
 
         }
         else
@@ -172,7 +178,7 @@ $app->post('/subscribeChannel',function($request,$response,$args){
             $payload["error_message"]=$users->error_message;
         }
 
-        
+
 
 
    }
@@ -209,7 +215,7 @@ $app->post('/subscribeChannel',function($request,$response,$args){
 
 ///perlu api
 $app->get('/getChannelSubscribed/{id_user}',function($request,$response,$args){
-   
+
     $dsubscribes = new D_subscribe();
     $id_channel = $args["id_user"];
     $payload=[];
@@ -218,14 +224,16 @@ $app->get('/getChannelSubscribed/{id_user}',function($request,$response,$args){
     {
         $payload["result"]="success";
         $payload["data"]=$dsubscribes->data;
+        return $response->withStatus(200)->withJSON($payload);
     }
     else
     {
         $payload["result"]="fail";
         $payload["error_message"]=$dsubscribes->error_message;
+        return $response->withStatus(404)->withJSON($payload);
     }
 
-    echo json_encode($payload);
+    //echo json_encode($payload);
 
 
 })->add(new soaAuth());
@@ -242,19 +250,21 @@ $app->get('/getTotalSubscriber/{id_user}',function($request,$response,$args){
     {
         $payload["result"]="success";
         $payload["data"]=$users->data;
+        return $response->withStatus(200)->withJSON($payload);
     }
     else
     {
         $payload["result"]="fail";
         $payload["error_message"]=$users->error_message;
+        return $response->withStatus(404)->withJSON($payload);
     }
 
-    echo json_encode($payload);
+    //echo json_encode($payload);
 })->add(new soaAuth());
 
 //perlu api
 $app->get('/getVideoViewers/{id_video}',function($request,$response,$args){
-    
+
     $id_video=$args["id_video"];
     $videos = new Video();
     $payload=[];
@@ -264,19 +274,21 @@ $app->get('/getVideoViewers/{id_video}',function($request,$response,$args){
     {
         $payload["result"]="success";
         $payload["data"]=$videos->data;
+        return $response->withStatus(200)->withJSON($payload);
     }
     else
     {
         $payload["result"]="fail";
         $payload["error_message"]=$videos->error_message;
+        return $response->withStatus(404)->withJSON($payload);
     }
 
-    echo json_encode($payload);
+    //echo json_encode($payload);
 })->add(new soaAuth());
 
 //perlu api
 $app->get('/getInfoChannel/{id_user}',function($request,$response,$args){
-    
+
     $id_user=$args["id_user"];
 
     $users = new User();
@@ -286,14 +298,16 @@ $app->get('/getInfoChannel/{id_user}',function($request,$response,$args){
     {
         $payload["result"]="success";
         $payload["data"]=$users->data;
+        return $response->withStatus(200)->withJSON($payload);
     }
     else
     {
         $payload["result"]="fail";
         $payload["error_message"]=$users->error_message;
+        return $response->withStatus(404)->withJSON($payload);
     }
 
-    echo json_encode($payload);
+    //echo json_encode($payload);
 })->add(new soaAuth());
 
 $app->get('/getNewCommentOnVideos/{id_user}',function($request,$response,$args){
@@ -306,18 +320,20 @@ $app->get('/getNewCommentOnVideos/{id_user}',function($request,$response,$args){
   {
     $payload["result"]="success";
     $payload["data"]=$hcomments->data;
+    return $response->withStatus(200)->withJSON($payload);
   }
   else
   {
     $payload["result"]="fail";
     $payload["error_message"]=$hcomments->error_message;
+    return $response->withStatus(404)->withJSON($payload);
   }
 
-  echo json_encode($payload);
+  //echo json_encode($payload);
 })->add(new soaAuth());
 
 $app->post('/insertComment',function($request,$response,$args){
-   
+
     $message = $request->getParsedBody()["message"];
     $status_read="F";
     $id_video = $request->getParsedBody()["id_video"];
@@ -330,18 +346,19 @@ $app->post('/insertComment',function($request,$response,$args){
    if($hcomments->insertComment($message,$status_read,$id_video,$id_user))
    {
      $payload["result"]="success";
-
+     return $response->withStatus(200)->withJSON($payload);
    }
    else
    {
     $payload["result"]="fail";
     $payload["error_message"]=$hcomments->error_message;
+    return $response->withStatus(400)->withJSON($payload);
    }
-   echo json_encode($payload);
+   //echo json_encode($payload);
 })->add(new soaAuth());
 
 $app->post('/uploadVideo',function($request,$response,$args){
-    
+
 
     $videos=new Video();
     $payload=[];
@@ -352,16 +369,18 @@ $app->post('/uploadVideo',function($request,$response,$args){
 
     if($videos->insertVideo($judul_video,$description,$video_path,$id_user))
     {
-        
+
         $uploaddir = __DIR__ .'/upload/video/';
         $uploadfile = $uploaddir . basename($_FILES['newfile']['name']);
 
         if (move_uploaded_file($_FILES['newfile']['tmp_name'], $uploadfile)) {
-            
+
             $payload["result"]="success";
+            return $response->withStatus(200)->withJSON($payload);
         } else {
             $payload["result"]="fail";
             $payload["error_message"]="Video Not Successfully Upload";
+            return $response->withStatus(400)->withJSON($payload);
         }
 
         //print_r($_FILES);
@@ -370,6 +389,7 @@ $app->post('/uploadVideo',function($request,$response,$args){
     {
         $payload["result"]="fail";
         $payload["error_message"]=$videos->error_message;
+        return $response->withStatus(400)->withJSON($payload);
     }
 
     echo json_encode($payload);

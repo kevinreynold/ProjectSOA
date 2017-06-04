@@ -9,13 +9,13 @@ class User extends \Illuminate\Database\Eloquent\Model
 	protected $table = 'user';
 	public $timestamps = false;
 
-	
+
 
 	function getUserWithApiKey($apikey)
 	{
 		$user = User::where('api_key', '=', $apikey)->first();
         $this->details = $user;
-        
+
         if($user)
         {
         	return true;
@@ -28,12 +28,12 @@ class User extends \Illuminate\Database\Eloquent\Model
 
 	function insertUser($id_user,$password,$nama_user,$email,$tanggal_lahir,$date_created,$profile_foto_url,$status,$description_channel,$subscriber_count,$api_key)
 	{
-		
+
 		try
 	    {
 	    	 //check id_user kembar
 	    	 $userFromDatabase = User::where('id_user',"=",$id_user)->first();
-	    	
+
 	    	 if($userFromDatabase)
 	    	 {
 	    	 	$this->error_message="id user sudah terdaftar!";
@@ -57,7 +57,7 @@ class User extends \Illuminate\Database\Eloquent\Model
 		     	 return true;
 	    	 }
 
-		     
+
 	    }
 	    catch (QueryException $e)
 	    {
@@ -74,7 +74,7 @@ class User extends \Illuminate\Database\Eloquent\Model
 			//public $primaryKey  = '_id';
 
 			$tempUserSelect=User::where("id_user",'=',$id_user)->first();
-			if($password==$tempUserSelect->password)
+			if(md5($password)==$tempUserSelect->password)
 			{
 				User::where(["id_user"=>$id_user])->update(["api_key"=>md5($id_user)]);
 				$this->new_api_key=md5($tempUserSelect->id_user);
@@ -85,21 +85,21 @@ class User extends \Illuminate\Database\Eloquent\Model
 				$this->error_message = "password tidak sesuai";
 				return false;
 			}
-			
+
 		}
 		catch(QueryException $ex)
 		{
 			$this->error_message = $e->getMessage();
 	        return false;
 		}
-		
+
 	}
 
 	function searchChannelByLikeNamaUser($nama_user)
 	{
-		
+
 			$channel = User::select('id_user','nama_user','profile_foto_url')->where('nama_user','LIKE', '%'.$nama_user.'%')->where('status','=','T')->get();
-		
+
 		//var_dump();
 		if($channel->first())
 		{
@@ -169,7 +169,7 @@ class User extends \Illuminate\Database\Eloquent\Model
 				$countNow = $tempUserSelect->subscriber_count;
 				$countNow +=$count;
 				User::where(["id_user"=>$id_user])->update(["subscriber_count"=>$countNow]);
-				
+
 				return true;
 			}
 			else
@@ -177,7 +177,7 @@ class User extends \Illuminate\Database\Eloquent\Model
 				$this->error_message = "id user tidak ditemukan";
 				return false;
 			}
-			
+
 		}
 		catch(QueryException $ex)
 		{
