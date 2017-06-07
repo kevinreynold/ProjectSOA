@@ -77,18 +77,23 @@ $app->post('/insertUser',function($request,$response,$args){
         if (move_uploaded_file($_FILES['newfile']['tmp_name'], $uploadfile)) {
 
             $payload["result"]="success";
+            return $response->withStatus(200)->withJSON($payload);
         } else {
             $payload["result"]="fail";
             $payload["error_message"]="Photo Not Successfully Upload";
+            return $response->withStatus(409)->withJSON($payload);
         }
+
+
     }
     else
     {
         $payload["result"]="fail";
         $payload["error_message"]=$users->error_message;
+        return $response->withStatus(404)->withJSON($payload);
     }
 
-    echo json_encode($payload);
+
 
 
 
@@ -395,5 +400,61 @@ $app->post('/uploadVideo',function($request,$response,$args){
     echo json_encode($payload);
 
 })->add(new soaAuth());
+
+$app->post('/translate',function($request,$response,$args){
+
+    $text = $request->getParsedBody()["text"];
+    $lang = $request->getParsedBody()["lang"]; //example en-id
+    $keys = "trnsl.1.1.20170606T030821Z.67ab6fc069d37c8e.6252e2473cecca381261339d3e4a460906364f4a";
+
+
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL,"https://translate.yandex.net/api/v1.5/tr.json/translate");
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+    curl_setopt($ch, CURLOPT_POSTFIELDS,
+            "key=$keys&text=$text&lang=$lang");
+
+
+    // receive server response ...
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $server_output = curl_exec ($ch);
+
+    curl_close ($ch);
+    $data = json_decode($server_output);
+
+    return $response->withStatus($data->code)->withJSON($data);
+
+
+})->add(new soaAuth());
+
+
+$app->get('/getListLanguage',function($request,$response,$args){
+
+  $keys="trnsl.1.1.20170606T030821Z.67ab6fc069d37c8e.6252e2473cecca381261339d3e4a460906364f4a";
+  $ui="en";
+  $ch = curl_init();
+
+  curl_setopt($ch, CURLOPT_URL,"https://translate.yandex.net/api/v1.5/tr.json/getLangs");
+  curl_setopt($ch, CURLOPT_POST, 1);
+  curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+  curl_setopt($ch, CURLOPT_POSTFIELDS,
+          "key=$keys&ui=$ui");
+
+
+  // receive server response ...
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+  $server_output = curl_exec ($ch);
+
+  curl_close ($ch);
+  $data = json_decode($server_output);
+  //var_dump($data);
+  return $response->withStatus(200)->withJSON($data);
+});
 
 $app->run();
