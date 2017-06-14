@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2017 at 06:22 PM
--- Server version: 10.1.19-MariaDB
--- PHP Version: 5.6.28
+-- Generation Time: Jun 14, 2017 at 08:56 AM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `soa`
 --
+CREATE DATABASE IF NOT EXISTS `soa` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `soa`;
 
 -- --------------------------------------------------------
 
@@ -26,12 +28,15 @@ SET time_zone = "+00:00";
 -- Table structure for table `d_like_video`
 --
 
-CREATE TABLE `d_like_video` (
+DROP TABLE IF EXISTS `d_like_video`;
+CREATE TABLE IF NOT EXISTS `d_like_video` (
   `id_video` int(11) NOT NULL,
   `id_user` varchar(32) NOT NULL,
   `date_like` date NOT NULL,
   `time_like` time NOT NULL,
-  `like_or_dislike` varchar(1) NOT NULL
+  `like_or_dislike` varchar(1) NOT NULL,
+  PRIMARY KEY (`id_video`,`id_user`),
+  KEY `id_user` (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -40,9 +45,12 @@ CREATE TABLE `d_like_video` (
 -- Table structure for table `d_subscribe`
 --
 
-CREATE TABLE `d_subscribe` (
+DROP TABLE IF EXISTS `d_subscribe`;
+CREATE TABLE IF NOT EXISTS `d_subscribe` (
   `id_user_subscriber` varchar(32) NOT NULL,
-  `id_user2_subscribed` varchar(32) NOT NULL
+  `id_user2_subscribed` varchar(32) NOT NULL,
+  PRIMARY KEY (`id_user_subscriber`,`id_user2_subscribed`),
+  KEY `FK_USER_SUBSCRIBED` (`id_user2_subscribed`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -61,15 +69,19 @@ INSERT INTO `d_subscribe` (`id_user_subscriber`, `id_user2_subscribed`) VALUES
 -- Table structure for table `h_comment`
 --
 
-CREATE TABLE `h_comment` (
-  `id_comment` int(11) NOT NULL,
+DROP TABLE IF EXISTS `h_comment`;
+CREATE TABLE IF NOT EXISTS `h_comment` (
+  `id_comment` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   `time` time NOT NULL,
   `message` text NOT NULL,
   `status_read` varchar(1) NOT NULL,
   `id_video` int(11) NOT NULL,
-  `id_user` varchar(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_user` varchar(32) NOT NULL,
+  PRIMARY KEY (`id_comment`),
+  KEY `id_video` (`id_video`),
+  KEY `FK_USER_COMMENT` (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `h_comment`
@@ -92,7 +104,8 @@ INSERT INTO `h_comment` (`id_comment`, `date`, `time`, `message`, `status_read`,
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(255) NOT NULL,
   `id_user` varchar(32) NOT NULL,
   `nama_user` varchar(50) NOT NULL,
@@ -103,7 +116,8 @@ CREATE TABLE `user` (
   `status` varchar(1) NOT NULL,
   `description_channel` varchar(144) NOT NULL,
   `subscriber_count` int(11) NOT NULL,
-  `api_key` varchar(255) NOT NULL
+  `api_key` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -125,8 +139,9 @@ INSERT INTO `user` (`password`, `id_user`, `nama_user`, `email`, `tanggal_lahir`
 -- Table structure for table `video`
 --
 
-CREATE TABLE `video` (
-  `id_video` int(11) NOT NULL,
+DROP TABLE IF EXISTS `video`;
+CREATE TABLE IF NOT EXISTS `video` (
+  `id_video` int(11) NOT NULL AUTO_INCREMENT,
   `judul_video` varchar(50) NOT NULL,
   `description` varchar(144) NOT NULL,
   `date_publish` date NOT NULL,
@@ -136,8 +151,10 @@ CREATE TABLE `video` (
   `viewers_count` int(11) NOT NULL,
   `comment_count` int(11) NOT NULL,
   `video_path` varchar(75) NOT NULL,
-  `id_user` varchar(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_user` varchar(32) NOT NULL,
+  PRIMARY KEY (`id_video`),
+  KEY `FK_USER_VIDEO` (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `video`
@@ -157,59 +174,6 @@ INSERT INTO `video` (`id_video`, `judul_video`, `description`, `date_publish`, `
 (17, 'aaaa', 'aaaa', '2017-05-28', '07:53:49', 0, 0, 0, 0, 'aa', 'riorio1'),
 (18, 'aku anak gembala', 'hahaha begitulah kisahku', '2017-05-28', '08:09:28', 0, 0, 0, 0, 'jcobasda saja.xls', 'riorio1');
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `d_like_video`
---
-ALTER TABLE `d_like_video`
-  ADD PRIMARY KEY (`id_video`,`id_user`),
-  ADD KEY `id_user` (`id_user`);
-
---
--- Indexes for table `d_subscribe`
---
-ALTER TABLE `d_subscribe`
-  ADD PRIMARY KEY (`id_user_subscriber`,`id_user2_subscribed`),
-  ADD KEY `FK_USER_SUBSCRIBED` (`id_user2_subscribed`);
-
---
--- Indexes for table `h_comment`
---
-ALTER TABLE `h_comment`
-  ADD PRIMARY KEY (`id_comment`),
-  ADD KEY `id_video` (`id_video`),
-  ADD KEY `FK_USER_COMMENT` (`id_user`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id_user`);
-
---
--- Indexes for table `video`
---
-ALTER TABLE `video`
-  ADD PRIMARY KEY (`id_video`),
-  ADD KEY `FK_USER_VIDEO` (`id_user`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `h_comment`
---
-ALTER TABLE `h_comment`
-  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
---
--- AUTO_INCREMENT for table `video`
---
-ALTER TABLE `video`
-  MODIFY `id_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- Constraints for dumped tables
 --
