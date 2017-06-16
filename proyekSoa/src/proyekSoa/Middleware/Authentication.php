@@ -29,7 +29,7 @@ class Authentication
             //diatas untuk gabungin
 
            // $response->getBody()->write("user tidak ditemukan asd");
-            $payload["result"]="fail";
+            $payload["result"]="fail-api";
             $payload["error_message"]="api key tidak terdaftar";
 
             return $response->withStatus(401)->withJSON($payload);
@@ -46,7 +46,7 @@ class Authentication
         # code...
         $response->withStatus(401);
 
-        $payload["result"]="fail";
+        $payload["result"]="fail-api";
         $payload["error_message"]="api key tidak diinput!";
 
         return $response->withStatus(401)->withJSON($payload);

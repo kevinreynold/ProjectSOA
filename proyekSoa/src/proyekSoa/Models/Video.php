@@ -9,7 +9,7 @@ class Video extends \Illuminate\Database\Eloquent\Model
 	protected $table = 'video';
 	public $timestamps = false;
 
-	
+
 
 
 	function searchVideoByLikeJudul($judul_video)
@@ -78,16 +78,16 @@ class Video extends \Illuminate\Database\Eloquent\Model
 				return false;
 			}
 
-			
+
 		}
 		catch(QueryException $ex)
 		{
 			$this->error_message = $e->getMessage();
 			return false;
 		}
-		
 
-		
+
+
 	}
 
 

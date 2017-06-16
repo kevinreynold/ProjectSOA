@@ -10,6 +10,11 @@ class User extends \Illuminate\Database\Eloquent\Model
 	public $timestamps = false;
 
 
+	function getDetailUserByApiKey($apikey)
+	{
+		$user = User::where('api_key', '=', $apikey)->first();
+		return $user;
+	}
 
 	function getUserWithApiKey($apikey)
 	{

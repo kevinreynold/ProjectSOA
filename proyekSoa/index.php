@@ -14,6 +14,7 @@ use proyekSoa\Models\D_subscribe;
 use proyekSoa\Models\D_like_video;
 use proyekSoa\Models\H_comment;
 use proyekSoa\Middleware\Authentication as soaAuth;
+use proyekSoa\Middleware\Logging;
 
 //require_once ("db.php");
 $app = new Slim\App();
@@ -125,7 +126,7 @@ $app->get('/searchChannel/{name}',function($request,$response,$args){
 
     //echo json_encode($payload);
 
-})->add(new soaAuth());
+})->add(new soaAuth())->add(new Logging("Serach Channel"));
 
 
 //perlu api
@@ -149,7 +150,7 @@ $app->get('/searchVideo/{name}',function($request,$response,$args){
 
     //echo json_encode($payload);
     //return $response->withStatus(200)->withJSON($payload);
-})->add(new soaAuth());
+})->add(new soaAuth())->add(new Logging("Serach Video"));
 
 //perlu api
 $app->post('/subscribeChannel',function($request,$response,$args){
@@ -168,11 +169,14 @@ $app->post('/subscribeChannel',function($request,$response,$args){
             if($dsubscribes->insertDSubscribe($id_channel,$id_user))
             {
                 $payload["result"]="success";
+                $statusCode=200;
+
             }
             else
             {
                  $payload["result"]="fail";
                  $payload["error_message"]=$dsubscribes->error_message;
+                 $statusCode=400;
             }
 
 
@@ -181,6 +185,7 @@ $app->post('/subscribeChannel',function($request,$response,$args){
         {
             $payload["result"]="fail";
             $payload["error_message"]=$users->error_message;
+            $statusCode=400;
         }
 
 
@@ -196,11 +201,13 @@ $app->post('/subscribeChannel',function($request,$response,$args){
             if($dsubscribes->deleteDSubscribe($id_channel,$id_user))
             {
                 $payload["result"]="success";
+                $statusCode=200;
             }
             else
             {
                  $payload["result"]="fail";
                  $payload["error_message"]=$dsubscribes->error_message;
+                 $statusCode=400;
             }
 
         }
@@ -208,15 +215,16 @@ $app->post('/subscribeChannel',function($request,$response,$args){
         {
             $payload["result"]="fail";
             $payload["error_message"]=$users->error_message;
+            $statusCode=400;
         }
 
         //delete D_subscribe
    }
+   return $response->withStatus($statusCode)->withJSON($payload);
+   //echo json_encode($payload);
 
-   echo json_encode($payload);
 
-
-})->add(new soaAuth());
+})->add(new soaAuth())->add(new Logging("subscribe channel"));
 
 ///perlu api
 $app->get('/getChannelSubscribed/{id_user}',function($request,$response,$args){
@@ -241,7 +249,7 @@ $app->get('/getChannelSubscribed/{id_user}',function($request,$response,$args){
     //echo json_encode($payload);
 
 
-})->add(new soaAuth());
+})->add(new soaAuth())->add(new Logging("get Channel Subscribe"));
 
 //perlu api
 $app->get('/getTotalSubscriber/{id_user}',function($request,$response,$args){
@@ -265,7 +273,7 @@ $app->get('/getTotalSubscriber/{id_user}',function($request,$response,$args){
     }
 
     //echo json_encode($payload);
-})->add(new soaAuth());
+})->add(new soaAuth())->add(new Logging("Get Total Subscriber"));
 
 //perlu api
 $app->get('/getVideoViewers/{id_video}',function($request,$response,$args){
@@ -289,7 +297,7 @@ $app->get('/getVideoViewers/{id_video}',function($request,$response,$args){
     }
 
     //echo json_encode($payload);
-})->add(new soaAuth());
+})->add(new soaAuth())->add(new Logging("Get Video Viewers"));
 
 //perlu api
 $app->get('/getInfoChannel/{id_user}',function($request,$response,$args){
@@ -313,7 +321,7 @@ $app->get('/getInfoChannel/{id_user}',function($request,$response,$args){
     }
 
     //echo json_encode($payload);
-})->add(new soaAuth());
+})->add(new soaAuth())->add(new Logging("get info channel"));
 
 $app->get('/getNewCommentOnVideos/{id_user}',function($request,$response,$args){
   $id_user=$args["id_user"];
@@ -335,7 +343,7 @@ $app->get('/getNewCommentOnVideos/{id_user}',function($request,$response,$args){
   }
 
   //echo json_encode($payload);
-})->add(new soaAuth());
+})->add(new soaAuth())->add(new Logging("Get New Comment On Video"));
 
 $app->post('/insertComment',function($request,$response,$args){
 
@@ -399,7 +407,7 @@ $app->post('/uploadVideo',function($request,$response,$args){
 
     echo json_encode($payload);
 
-})->add(new soaAuth());
+})->add(new soaAuth())->add(new Logging("Upload Video"));
 
 $app->post('/translate',function($request,$response,$args){
 
@@ -424,12 +432,13 @@ $app->post('/translate',function($request,$response,$args){
     $server_output = curl_exec ($ch);
 
     curl_close ($ch);
-    $data = json_decode($server_output);
+    $data = json_decode($server_output,true);
+    $data["result"]="success";
 
-    return $response->withStatus($data->code)->withJSON($data);
+    return $response->withStatus($data["code"])->withJSON($data);
 
 
-})->add(new soaAuth());
+})->add(new soaAuth())->add(new Logging("translate"));
 
 
 $app->get('/getListLanguage',function($request,$response,$args){
