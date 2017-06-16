@@ -1,5 +1,5 @@
 ---
-title: API Reference
+title: MyVid API Documentation
 
 language_tabs:
   - shell
@@ -8,8 +8,7 @@ language_tabs:
   - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <a href='https://github.com/niksat3/ProjectSOA/tree/master/proyekSoa'>Documentation for MyVid API</a>
 
 includes:
   - errors
@@ -19,9 +18,7 @@ search: true
 
 # Intro
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
-
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Welcome to the MyVid API! You can use our API to access MyVid API endpoints, which you can get information on movies, channels, and users.
 
 This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
@@ -187,3 +184,15 @@ Parameter | Description
 --------- | -----------
 ID | The ID of the kitten to retrieve
 
+
+# Made By
+
+This project is made by:
+
+`Bernard Niklas Satrijo /214116296`
+
+`Fernandito Stanford /214116318`
+
+`Reynold Kevin /214116368`
+
+`Rio Adianto /214116372`
