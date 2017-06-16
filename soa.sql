@@ -3,9 +3,21 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
+<<<<<<< HEAD
+-- Generation Time: Jun 16, 2017 at 10:27 AM
+-- Server version: 10.1.19-MariaDB
+-- PHP Version: 5.6.28
+=======
 -- Generation Time: Jun 14, 2017 at 08:56 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
+>>>>>>> 76ac4c3de95b7d2983971e4cc735464fa4e1e7b8
+=======
+-- Generation Time: Jun 14, 2017 at 08:56 AM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
+>>>>>>> 76ac4c3de95b7d2983971e4cc735464fa4e1e7b8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -101,6 +113,44 @@ INSERT INTO `h_comment` (`id_comment`, `date`, `time`, `message`, `status_read`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `log`
+--
+
+CREATE TABLE `log` (
+  `id_log` int(11) NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `tgl` date NOT NULL,
+  `waktu` time NOT NULL,
+  `id_user` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `log`
+--
+
+INSERT INTO `log` (`id_log`, `keterangan`, `tgl`, `waktu`, `id_user`) VALUES
+(1, 'Serach Channel', '2017-06-09', '05:31:45', 'aaaa'),
+(2, 'Serach Channel', '2017-06-09', '05:31:55', 'aaaa'),
+(3, 'Serach Channel', '2017-06-09', '05:32:04', 'aaaa'),
+(4, 'Serach Channel', '2017-06-09', '05:34:15', 'aaaa'),
+(5, 'Serach Channel', '2017-06-09', '05:36:12', 'aaaa'),
+(6, 'Serach Channel', '2017-06-09', '05:36:25', 'aaaa'),
+(7, 'Serach Channel', '2017-06-09', '05:36:38', 'aaaa'),
+(8, 'Serach Channel success', '2017-06-09', '06:44:58', 'aaaa'),
+(9, 'Serach Channel success', '2017-06-09', '06:45:29', 'aaaa'),
+(10, 'Serach Channel success', '2017-06-09', '06:49:09', 'aaaa'),
+(11, 'Serach Channel success', '2017-06-09', '06:53:39', 'aaaa'),
+(12, 'Serach Channel success', '2017-06-09', '06:54:13', 'aaaa'),
+(13, 'Serach Channel success', '2017-06-09', '06:56:52', 'rio123'),
+(14, 'Serach Channel success', '2017-06-09', '07:09:24', 'rio123'),
+(15, 'translate ', '2017-06-09', '07:25:07', 'aaaa'),
+(16, 'translate success', '2017-06-09', '07:28:05', 'aaaa'),
+(17, 'translate success', '2017-06-11', '02:27:53', 'aaaa'),
+(18, 'translate success', '2017-06-11', '02:31:48', 'aaaa');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -175,6 +225,76 @@ INSERT INTO `video` (`id_video`, `judul_video`, `description`, `date_publish`, `
 (18, 'aku anak gembala', 'hahaha begitulah kisahku', '2017-05-28', '08:09:28', 0, 0, 0, 0, 'jcobasda saja.xls', 'riorio1');
 
 --
+<<<<<<< HEAD
+<<<<<<< HEAD
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `d_like_video`
+--
+ALTER TABLE `d_like_video`
+  ADD PRIMARY KEY (`id_video`,`id_user`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `d_subscribe`
+--
+ALTER TABLE `d_subscribe`
+  ADD PRIMARY KEY (`id_user_subscriber`,`id_user2_subscribed`),
+  ADD KEY `FK_USER_SUBSCRIBED` (`id_user2_subscribed`);
+
+--
+-- Indexes for table `h_comment`
+--
+ALTER TABLE `h_comment`
+  ADD PRIMARY KEY (`id_comment`),
+  ADD KEY `id_video` (`id_video`),
+  ADD KEY `FK_USER_COMMENT` (`id_user`);
+
+--
+-- Indexes for table `log`
+--
+ALTER TABLE `log`
+  ADD PRIMARY KEY (`id_log`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id_user`);
+
+--
+-- Indexes for table `video`
+--
+ALTER TABLE `video`
+  ADD PRIMARY KEY (`id_video`),
+  ADD KEY `FK_USER_VIDEO` (`id_user`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `h_comment`
+--
+ALTER TABLE `h_comment`
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+--
+-- AUTO_INCREMENT for table `log`
+--
+ALTER TABLE `log`
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT for table `video`
+--
+ALTER TABLE `video`
+  MODIFY `id_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+--
+=======
+>>>>>>> 76ac4c3de95b7d2983971e4cc735464fa4e1e7b8
+=======
+>>>>>>> 76ac4c3de95b7d2983971e4cc735464fa4e1e7b8
 -- Constraints for dumped tables
 --
 
