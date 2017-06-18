@@ -3,21 +3,21 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-<<<<<<< HEAD
-<<<<<<< HEAD
+-- <<<<<<< HEAD
+-- <<<<<<< HEAD
 -- Generation Time: Jun 16, 2017 at 10:27 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
-=======
+-- =======
 -- Generation Time: Jun 14, 2017 at 08:56 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
->>>>>>> 76ac4c3de95b7d2983971e4cc735464fa4e1e7b8
-=======
+-- >>>>>>> 76ac4c3de95b7d2983971e4cc735464fa4e1e7b8
+-- =======
 -- Generation Time: Jun 14, 2017 at 08:56 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
->>>>>>> 76ac4c3de95b7d2983971e4cc735464fa4e1e7b8
+-- >>>>>>> 76ac4c3de95b7d2983971e4cc735464fa4e1e7b8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -225,8 +225,8 @@ INSERT INTO `video` (`id_video`, `judul_video`, `description`, `date_publish`, `
 (18, 'aku anak gembala', 'hahaha begitulah kisahku', '2017-05-28', '08:09:28', 0, 0, 0, 0, 'jcobasda saja.xls', 'riorio1');
 
 --
-<<<<<<< HEAD
-<<<<<<< HEAD
+-- <<<<<<< HEAD
+-- <<<<<<< HEAD
 -- Indexes for dumped tables
 --
 
@@ -291,10 +291,10 @@ ALTER TABLE `log`
 ALTER TABLE `video`
   MODIFY `id_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
-=======
->>>>>>> 76ac4c3de95b7d2983971e4cc735464fa4e1e7b8
-=======
->>>>>>> 76ac4c3de95b7d2983971e4cc735464fa4e1e7b8
+-- =======
+-- >>>>>>> 76ac4c3de95b7d2983971e4cc735464fa4e1e7b8
+-- =======
+-- >>>>>>> 76ac4c3de95b7d2983971e4cc735464fa4e1e7b8
 -- Constraints for dumped tables
 --
 
