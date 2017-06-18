@@ -284,7 +284,7 @@ Remember to put your real user id or get channel information will fail
 
 ## Get Unread Comments
 
-This endpoint get all comments on all videos on one user that haven't be read by the user.
+This endpoint get all comments on all videos on one user that haven't be read by the user and update all of that comments status to read.
 
 ### HTTP Request
 

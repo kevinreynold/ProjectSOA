@@ -60,5 +60,19 @@ class H_comment extends \Illuminate\Database\Eloquent\Model
 		}
 	}
 
+	function updateStatusComment($id_user)
+	{
+		try
+		{
+			H_comment::where(["id_user"=>$id_user])->update(["status_read"=>"T"]);
+
+			return true;
+		}catch(QueryException $ex)
+		{
+			$this->error_message=$ex->getMessage();
+			return false;
+		}
+	}
+
 
 }

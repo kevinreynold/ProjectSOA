@@ -333,6 +333,11 @@ $app->get('/getNewCommentOnVideos/{id_user}',function($request,$response,$args){
   {
     $payload["result"]="success";
     $payload["data"]=$hcomments->data;
+
+    $hcomments->updateStatusComment($id_user);
+
+
+
     return $response->withStatus(200)->withJSON($payload);
   }
   else
